@@ -42,7 +42,6 @@ export default function SingleBook({ id }) {
   });
 
   if (loading) return <p>Loading...</p>;
-  console.log(data);
 
   return (
     <PageWrapper>
