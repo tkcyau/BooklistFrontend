@@ -7,39 +7,35 @@ import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 import { SearchStyles, DropDown, DropDownItem } from './DropdownStyles';
 
-const SEARCH_BOOKS_QUERY = gql`
-  query SEARCH_BOOKS_QUERY($searchTerm: String!) {
-    searchTerms: allBooks(
+const SEARCH_AUTHORS_QUERY = gql`
+  query SEARCH_AUTHORS_QUERY($searchTerm: String!) {
+    searchTerms: allAuthors(
       where: {
         OR: [
-          { title_contains_i: $searchTerm }
-          { author: { name_contains_i: $searchTerm } }
+          { name_contains_i: $searchTerm }
+          { dateOfBirth_contains_i: $searchTerm }
         ]
       }
     ) {
       id
-      title
-      year
-      author {
-        id
-        name
-      }
+      name
+      dateOfBirth
     }
   }
 `;
 
-export default function BookSearch() {
+export default function AuthorSearch() {
   const router = useRouter();
   resetIdCounter();
 
-  const [findBooks, { loading, data, error }] = useLazyQuery(
-    SEARCH_BOOKS_QUERY,
+  const [findAuthors, { loading, data, error }] = useLazyQuery(
+    SEARCH_AUTHORS_QUERY,
     {
       fetchPolicy: 'no-cache',
     }
   );
   const items = data?.searchTerms || [];
-  const findBooksDebounced = debounce(findBooks, 350);
+  const findBooksDebounced = debounce(findAuthors, 350);
   const {
     isOpen,
     inputValue,
@@ -59,7 +55,7 @@ export default function BookSearch() {
     },
     onSelectedItemChange({ selectedItem }) {
       router.push({
-        pathname: `/book/${selectedItem.id}`,
+        pathname: `/author/${selectedItem.id}`,
       });
     },
     itemToString: (item) => item?.name || '',
@@ -70,7 +66,7 @@ export default function BookSearch() {
         <input
           {...getInputProps({
             type: 'search',
-            placeholder: 'Search for a book',
+            placeholder: 'Search for a author',
             id: 'search',
             className: loading ? 'loading' : '',
           })}
@@ -84,11 +80,11 @@ export default function BookSearch() {
               key={item.id}
               highlighted={index === highlightedIndex}
             >
-              {item.title}
+              {item.name}
             </DropDownItem>
           ))}
         {isOpen && !items.length && !loading && (
-          <DropDownItem>Sorry, no books found for {inputValue}</DropDownItem>
+          <DropDownItem>Sorry, no authors found for {inputValue}</DropDownItem>
         )}
       </DropDown>
     </SearchStyles>

@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 import AuthorCard from './AuthorCard';
 import CreateAuthorForm from './CreateAuthorForm';
+import AuthorSearch from './AuthorSearch';
 
 const AuthorCardWrapper = styled.div`
   display: flex;
@@ -25,9 +26,10 @@ export default function BookList() {
   if (error) return <p>Error: {error.message}</p>;
   return (
     <div>
+      <AuthorSearch />
+      <h1>Authors List</h1>
       <CreateAuthorForm />
 
-      <h1>Authors List</h1>
       <AuthorCardWrapper>
         {data.allAuthors.map((author) => (
           <AuthorCard key={author.id} author={author} />
