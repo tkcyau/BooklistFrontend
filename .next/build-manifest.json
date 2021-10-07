@@ -29,10 +29,30 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
+    "/author/[id]": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/author/[id].js"
+    ],
     "/authors": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/authors.js"
+    ],
+    "/book/[id]": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/book/[id].js"
+    ],
+    "/updateauthor": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/updateauthor.js"
+    ],
+    "/updatebook": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/updatebook.js"
     ]
   },
   "ampFirstPages": []

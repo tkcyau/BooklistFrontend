@@ -7,11 +7,14 @@ import DeleteAuthorButton from './DeleteAuthorButton';
 const Card = styled.div`
   border: 1px solid darkblue;
   width: 300px;
-  margin-right: 16px;
   margin-bottom: 16px;
+  margin-right: 16px;
   padding: 16px;
   border-radius: 4px;
   background: #b1dce0;
+  a {
+    margin-right: 16px;
+  }
 `;
 
 export default function AuthorCard({ author }) {

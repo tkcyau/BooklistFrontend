@@ -1,9 +1,31 @@
 import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import Router from 'next/router';
-
+import styled from 'styled-components';
 import useForm from '../lib/useForm';
 import { ALL_BOOKS_QUERY } from './Booklist';
+
+const FormWrapper = styled.div`
+  h2 {
+    text-align: center;
+  }
+  input {
+    margin-left: 8px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    border: none;
+    border-bottom: 1px solid darkgrey;
+  }
+
+  fieldset {
+    padding: 24px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    border: 1px solid lightgrey;
+  }
+`;
 
 const SINGLE_BOOK_QUERY = gql`
   query SINGLE_BOOK_QUERY($id: ID!) {
@@ -71,8 +93,8 @@ export default function UpdateBook({ id }) {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
-      <p>Update {id}</p>
+    <FormWrapper>
+      <h2>Update Book</h2>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -157,6 +179,6 @@ export default function UpdateBook({ id }) {
           <button type="submit">Edit Book</button>
         </fieldset>
       </form>
-    </div>
+    </FormWrapper>
   );
 }
