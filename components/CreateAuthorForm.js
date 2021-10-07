@@ -69,9 +69,9 @@ export default function CreateAuthorForm() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          console.log(inputs);
+
           // Submit input fields to the backend
-          const res = await createAuthor();
+          await createAuthor();
           clearForm();
           // Router.push({
           //   pathName: `/book/${res.data.createBook.id}`,

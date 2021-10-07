@@ -10,7 +10,6 @@ const DELETE_BOOK_MUTATION = gql`
 `;
 
 function update(cache, payload) {
-  console.log(payload);
   cache.evict(cache.identify(payload.data.deleteBook));
 }
 

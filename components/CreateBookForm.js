@@ -60,7 +60,7 @@ export default function BookForm() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          console.log(inputs);
+
           // Submit input fields to the backend
           const res = await createBook();
           clearForm();

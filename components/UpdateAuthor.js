@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import useForm from '../lib/useForm';
 import { ALL_AUTHORS_QUERY } from './AuthorsList';
@@ -50,6 +50,7 @@ const UPDATE_AUTHOR_MUTATION = gql`
 `;
 
 export default function UpdateAuthor({ id }) {
+  const router = useRouter();
   //   Get existing Author
 
   const { data, error, loading } = useQuery(SINGLE_AUTHOR_QUERY, {
@@ -71,8 +72,7 @@ export default function UpdateAuthor({ id }) {
   ] = useMutation(UPDATE_AUTHOR_MUTATION);
 
   if (loading) return <p>Loading...</p>;
-  console.log(data);
-  console.log(inputs);
+
   return (
     <FormWrapper>
       <div>
@@ -81,7 +81,7 @@ export default function UpdateAuthor({ id }) {
           onSubmit={async (e) => {
             e.preventDefault();
 
-            const authorRes = await updateAuthor({
+            await updateAuthor({
               variables: {
                 id,
                 name: inputs.authorName,
@@ -93,18 +93,7 @@ export default function UpdateAuthor({ id }) {
                 },
               ],
             });
-            alert('Edit complete!');
-            Router.push({
-              pathName: `/authors`,
-            });
-
-            //   console.log(inputs);
-            //   // Submit input fields to the backend
-            //   const res = await createBook();
-            //   clearForm();
-            //   Router.push({
-            //     pathName: `/product/${res.data.createBook.id}`,
-            //   });
+            router.push('/authors');
           }}
         >
           <fieldset disabled={updatedAuthorLoading}>

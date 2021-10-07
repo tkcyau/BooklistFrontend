@@ -38,7 +38,6 @@ export default function SingleAuthor({ id }) {
       id,
     },
   });
-  console.log(data);
   if (loading) return <p>Loading...</p>;
 
   return (

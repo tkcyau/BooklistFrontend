@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import useForm from '../lib/useForm';
 import { ALL_BOOKS_QUERY } from './Booklist';
@@ -63,6 +63,7 @@ const UPDATE_AUTHOR_MUTATION = gql`
 `;
 
 export default function UpdateBook({ id }) {
+  const router = useRouter();
   //   Get existing book
 
   const { data, error, loading } = useQuery(SINGLE_BOOK_QUERY, {
@@ -98,7 +99,7 @@ export default function UpdateBook({ id }) {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          const res = await updateBook({
+          await updateBook({
             variables: {
               id,
               title: inputs.title,
@@ -109,23 +110,14 @@ export default function UpdateBook({ id }) {
             refetchQueries: [{ query: ALL_BOOKS_QUERY }],
           }).catch(console.error);
 
-          const authorRes = await updateAuthor({
+          await updateAuthor({
             variables: {
               id: data.Book.author.id,
               name: inputs.authorName,
               dateOfBirth: inputs.dateOfBirth,
             },
           });
-
-          alert('Edit complete!');
-
-          //   console.log(inputs);
-          //   // Submit input fields to the backend
-          //   const res = await createBook();
-          //   clearForm();
-          //   Router.push({
-          //     pathName: `/product/${res.data.createBook.id}`,
-          //   });
+          router.push('/');
         }}
       >
         <fieldset disabled={updatedLoading}>
