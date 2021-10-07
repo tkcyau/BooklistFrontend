@@ -30,13 +30,13 @@ export default function SingleBook({ id }) {
   return (
     <div>
       <Head>
-        <title>{data.Book.title}</title>
+        <title>{data?.Book.title}</title>
       </Head>
-      <h2>Book Title: {data.Book.title}</h2>
-      <p>Year: {data.Book.year}</p>
+      <h2>Book Title: {data?.Book.title}</h2>
+      <p>Year: {data?.Book.year}</p>
 
-      <p>Author Name: {data.Book.author.name}</p>
-      <p>Author Date of Birth: {data.Book.author.dateOfBirth}</p>
+      <p>Author Name: {data?.Book.author.name}</p>
+      <p>Author Date of Birth: {data?.Book.author.dateOfBirth}</p>
     </div>
   );
 }

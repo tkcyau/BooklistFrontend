@@ -1,8 +1,15 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
+import styled from 'styled-components';
 import AuthorCard from './AuthorCard';
+import CreateAuthorForm from './CreateAuthorForm';
 
-const ALL_AUTHORS_QUERY = gql`
+const AuthorCardWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const ALL_AUTHORS_QUERY = gql`
   query ALL_AUTHORS_QUERY {
     allAuthors {
       id
@@ -18,10 +25,14 @@ export default function BookList() {
   if (error) return <p>Error: {error.message}</p>;
   return (
     <div>
+      <CreateAuthorForm />
+
       <h1>Authors List</h1>
-      {data.allAuthors.map((author) => (
-        <AuthorCard key={author.id} data={author} />
-      ))}
+      <AuthorCardWrapper>
+        {data.allAuthors.map((author) => (
+          <AuthorCard key={author.id} author={author} />
+        ))}
+      </AuthorCardWrapper>
     </div>
   );
 }

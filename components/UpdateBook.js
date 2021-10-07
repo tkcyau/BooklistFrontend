@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import Router from 'next/router';
 
 import useForm from '../lib/useForm';
+import { ALL_BOOKS_QUERY } from './Booklist';
 
 const SINGLE_BOOK_QUERY = gql`
   query SINGLE_BOOK_QUERY($id: ID!) {
@@ -68,8 +69,7 @@ export default function UpdateBook({ id }) {
   ] = useMutation(UPDATE_AUTHOR_MUTATION);
 
   if (loading) return <p>Loading...</p>;
-  console.log(data);
-  console.log(inputs);
+
   return (
     <div>
       <p>Update {id}</p>
@@ -84,8 +84,8 @@ export default function UpdateBook({ id }) {
               //   authorName: inputs.authorName,
               //   dateOfBirth: inputs.dateOfBirth,
             },
+            refetchQueries: [{ query: ALL_BOOKS_QUERY }],
           }).catch(console.error);
-          console.log(res);
 
           const authorRes = await updateAuthor({
             variables: {
@@ -94,6 +94,8 @@ export default function UpdateBook({ id }) {
               dateOfBirth: inputs.dateOfBirth,
             },
           });
+
+          alert('Edit complete!');
 
           //   console.log(inputs);
           //   // Submit input fields to the backend

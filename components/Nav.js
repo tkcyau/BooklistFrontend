@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 const NavWrapper = styled.nav`
-  padding: 8px 0;
+  padding: 8px 48px;
   background: #b1dce0;
   a {
     font-family: 'Arial';

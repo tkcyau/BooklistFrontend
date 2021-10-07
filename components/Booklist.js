@@ -1,7 +1,13 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
+import styled from 'styled-components';
 import BookCard from './BookCard';
 import CreateBookForm from './CreateBookForm';
+
+const BookCardsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 export const ALL_BOOKS_QUERY = gql`
   query ALL_BOOKS_QUERY {
@@ -24,10 +30,12 @@ export default function BookList() {
   return (
     <div>
       <h1>Booklist</h1>
-      {data.allBooks.map((book) => (
-        <BookCard key={book.id} book={book} />
-      ))}
       <CreateBookForm />
+      <BookCardsWrapper>
+        {data.allBooks.map((book) => (
+          <BookCard key={book.id} book={book} />
+        ))}
+      </BookCardsWrapper>
     </div>
   );
 }
