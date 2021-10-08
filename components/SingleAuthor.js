@@ -27,6 +27,7 @@ const SINGLE_AUTHOR_QUERY = gql`
       name
       dateOfBirth
       book {
+        id
         title
         year
       }
@@ -54,10 +55,10 @@ export default function SingleAuthor({ id }) {
           <div>
             <h3>Books authored:</h3>
             {data.Author.book.map((book) => (
-              <>
+              <div key={book.id}>
                 <p>Title: {book.title}</p>
                 <p>Year: {book.year}</p>
-              </>
+              </div>
             ))}
           </div>
         )}

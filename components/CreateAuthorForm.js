@@ -29,8 +29,8 @@ const CREATE_AUTHOR_MUTATION = gql`
   mutation CREATE_AUTHOR_MUTATION(
     $authorName: String!
     $dateOfBirth: String!
-    $title: String
-    $year: Int
+    $title: String!
+    $year: Int!
   ) {
     createAuthor(
       data: {
@@ -103,12 +103,12 @@ export default function CreateAuthorForm() {
                 onChange={handleChange}
               />
             </label>
-            <button type="submit">Add Author</button>
           </AuthorFieldsGroup>
           <BookFieldsGroup>
             <label htmlFor="title">
               Book title
               <input
+                required
                 type="text"
                 id="title"
                 name="title"
@@ -120,6 +120,7 @@ export default function CreateAuthorForm() {
             <label htmlFor="year">
               Year
               <input
+                required
                 type="number"
                 id="year"
                 name="year"
@@ -128,6 +129,7 @@ export default function CreateAuthorForm() {
                 onChange={handleChange}
               />
             </label>
+            <button type="submit">Add Author</button>
           </BookFieldsGroup>
         </fieldset>
       </form>
