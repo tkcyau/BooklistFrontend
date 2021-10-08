@@ -14,6 +14,7 @@ const InfoContainer = styled.div`
   padding: 16px;
   border-radius: 4px;
   h2,
+  h3,
   p {
     text-align: center;
   }
@@ -27,6 +28,7 @@ const SINGLE_AUTHOR_QUERY = gql`
       dateOfBirth
       book {
         title
+        year
       }
     }
   }
@@ -39,7 +41,7 @@ export default function SingleAuthor({ id }) {
     },
   });
   if (loading) return <p>Loading...</p>;
-
+  console.log(data);
   return (
     <PageWrapper>
       <Head>
@@ -48,6 +50,17 @@ export default function SingleAuthor({ id }) {
       <InfoContainer>
         <h2>Author name: {data.Author.name}</h2>
         <p>Date of birth: {data.Author.dateOfBirth}</p>
+        {data.Author.book && (
+          <div>
+            <h3>Books authored:</h3>
+            {data.Author.book.map((book) => (
+              <>
+                <p>Title: {book.title}</p>
+                <p>Year: {book.year}</p>
+              </>
+            ))}
+          </div>
+        )}
       </InfoContainer>
     </PageWrapper>
   );
