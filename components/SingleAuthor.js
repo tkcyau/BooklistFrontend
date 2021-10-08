@@ -51,7 +51,7 @@ export default function SingleAuthor({ id }) {
       <InfoContainer>
         <h2>Author name: {data.Author.name}</h2>
         <p>Date of birth: {data.Author.dateOfBirth}</p>
-        {data.Author.book && (
+        {data.Author.book.length && (
           <div>
             <h3>Books authored:</h3>
             {data.Author.book.map((book) => (

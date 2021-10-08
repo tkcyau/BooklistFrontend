@@ -49,6 +49,17 @@ const UPDATE_AUTHOR_MUTATION = gql`
   }
 `;
 
+const ADD_BOOK_TO_AUTHOR_MUTATION = gql`
+  mutation ADD_BOOK_TO_AUTHOR_MUTATION($id: ID!, $title: String!, $year: Int!) {
+    createBook(
+      data: { title: $title, year: $year, author: { connect: { id: $id } } }
+    ) {
+      id
+      title
+    }
+  }
+`;
+
 export default function UpdateAuthor({ id }) {
   const router = useRouter();
   //   Get existing Author
@@ -60,6 +71,8 @@ export default function UpdateAuthor({ id }) {
   const { inputs, handleChange, clearForm, resetForm } = useForm({
     authorName: data?.Author.name,
     dateOfBirth: data?.Author.dateOfBirth,
+    title: '',
+    year: '',
   });
 
   const [
@@ -71,8 +84,12 @@ export default function UpdateAuthor({ id }) {
     },
   ] = useMutation(UPDATE_AUTHOR_MUTATION);
 
-  if (loading) return <p>Loading...</p>;
+  const [
+    addBook,
+    { data: addBookData, error: addBookError, loading: addBookloading },
+  ] = useMutation(ADD_BOOK_TO_AUTHOR_MUTATION);
 
+  if (loading) return <p>Loading...</p>;
   return (
     <FormWrapper>
       <div>
@@ -93,7 +110,7 @@ export default function UpdateAuthor({ id }) {
                 },
               ],
             });
-            router.push('/authors');
+            alert('Author updated!');
           }}
         >
           <fieldset disabled={updatedAuthorLoading}>
@@ -122,6 +139,53 @@ export default function UpdateAuthor({ id }) {
               />
             </label>
             <button type="submit">Edit Author</button>
+          </fieldset>
+        </form>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+
+            await addBook({
+              variables: {
+                id,
+                title: inputs.title,
+                year: inputs.year,
+              },
+              refetchQueries: [
+                {
+                  query: ALL_AUTHORS_QUERY,
+                },
+              ],
+            });
+            alert('Book added to author!');
+          }}
+        >
+          <fieldset disabled={updatedAuthorLoading}>
+            <label htmlFor="title">
+              Book title
+              <input
+                required
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Book title"
+                value={inputs.title}
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="year">
+              Year
+              <input
+                required
+                type="number"
+                id="year"
+                name="year"
+                placeholder="Year"
+                value={inputs.year}
+                onChange={handleChange}
+              />
+            </label>
+            <button type="submit">Add Book to Author</button>
           </fieldset>
         </form>
       </div>
